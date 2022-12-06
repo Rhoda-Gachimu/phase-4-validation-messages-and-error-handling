@@ -23,8 +23,13 @@ function MovieForm() {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
-      .then((newMovie) => console.log(newMovie));
+    .then((response) => {
+      if (response.ok) {
+        response.json().then((newMovie) => console.log(newMovie));
+      } else {
+        response.json().then((errorData) => setErrors(errorData.errors));
+      }
+    })
   }
 
   function handleChange(e) {
